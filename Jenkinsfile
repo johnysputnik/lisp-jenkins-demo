@@ -19,7 +19,7 @@ pipeline {
         }
 	      stage('Label') {
             steps {
-                sh "git label build_${env.BUILD_NUMBER}"
+                sh "git tag build_${env.BUILD_NUMBER}"
                 sh 'git push'
             }
         }
