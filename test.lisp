@@ -24,6 +24,8 @@
   (assert-equal 1 (my-inc 0))
   (assert-equal 0 (my-inc -1)))
 
+(define-test test-main
+  (assert-equal 3 (main)))
 
 (write-tap-to-file
  (run-tests :all)
