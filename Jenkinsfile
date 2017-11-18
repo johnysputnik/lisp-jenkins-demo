@@ -5,6 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
+                sh "sbcl --load test.lisp"
             }
         }
         stage('Test') {
@@ -19,6 +20,7 @@ pipeline {
         }
 	      stage('Label') {
             steps {
+                echo 'Labeling....'
                 sh "git tag build_${env.BUILD_NUMBER}"
                 sh "git push origin build_${env.BUILD_NUMBER}"
             }
