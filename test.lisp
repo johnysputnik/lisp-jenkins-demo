@@ -1,17 +1,10 @@
-;; CODE
-
-(defun my-inc (x)
-  (+ 1 x))
-
-(defun main ()
-  (print (my-inc 2)))
-
-;; TESTS
-
 (ql:quickload :lisp-unit)
-
 (use-package :lisp-unit)
 
+(require :sb-cover)
+(declaim (optimize sb-cover:store-coverage-data))
+
+(load (compile-file "main.lisp"))
 
 (setf *print-summary* t)
 (setf *print-failures* t)
@@ -31,4 +24,7 @@
  (run-tests :all)
  "tests.tap")
 
-(sb-ext:save-lisp-and-die "test" :toplevel #'main :executable t)
+(sb-cover:report "coverage-report/")
+(declaim (optimize (sb-cover:store-coverage-data 0)))
+
+(quit)

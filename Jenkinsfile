@@ -2,21 +2,18 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
-            steps {
-                echo 'Building..'
-                sh "sbcl --load test.lisp"
-            }
-        }
+
         stage('Test') {
             steps {
                 echo 'Testing..'
+                sh "sbcl --load test.lisp"
                 step([$class: "TapPublisher", testResults: "**/tests.tap"])
             }
         }
-        stage('Deploy') {
+        stage('Build') {
             steps {
-                echo 'Deploying....'
+                echo 'Building..'
+                sh "sbcl --load build.lisp"
             }
         }
 	      stage('Label') {
@@ -44,4 +41,13 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr:'10'))
         timeout(time: 60, unit: 'MINUTES')
     }
+
+    publishHTML (target: [
+      allowMissing: false,
+      alwaysLinkToLastBuild: false,
+      keepAll: true,
+      reportDir: 'coverage',
+      reportFiles: 'coverage-report/cover-index.html',
+      reportName: "Coverage Report"
+    ])
 }
