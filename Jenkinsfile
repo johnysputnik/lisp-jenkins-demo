@@ -8,6 +8,7 @@ pipeline {
                 echo 'Testing..'
                 sh "sbcl --load test.lisp"
                 step([$class: "TapPublisher", testResults: "**/tests.tap"])
+                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '', reportFiles: 'coverage-report/cover-index.html', reportName: 'Coverage Report', reportTitles: ''])
             }
         }
         stage('Build') {
@@ -41,13 +42,4 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr:'10'))
         timeout(time: 60, unit: 'MINUTES')
     }
-
-    publishHTML (target: [
-      allowMissing: false,
-      alwaysLinkToLastBuild: false,
-      keepAll: true,
-      reportDir: 'coverage',
-      reportFiles: 'coverage-report/cover-index.html',
-      reportName: "Coverage Report"
-    ])
 }
