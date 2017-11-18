@@ -11,6 +11,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
+                step([$class: "TapPublisher", testResults: "**/target/tests.tap"])
             }
         }
         stage('Deploy') {
