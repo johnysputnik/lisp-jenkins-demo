@@ -21,6 +21,7 @@ pipeline {
             steps {
                 sh "git tag build_${env.BUILD_NUMBER}"
                 sh "git push origin build_${env.BUILD_NUMBER}"
+                slackSend color: "#439FE0", message: "Build Complete: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
             }
         }
     }
