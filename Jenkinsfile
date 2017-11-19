@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent sbcl-agent 
 
     stages {
 
