@@ -1,5 +1,5 @@
 pipeline {
-    agent sbcl-agent 
+    agent { label 'sbcl-agent' } 
 
     stages {
 
