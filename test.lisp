@@ -20,6 +20,9 @@
 (define-test test-main
   (assert-equal 3 (main)))
 
+(define-test test-is-positive
+  (assert-equal t (is-positive 2)))
+
 (write-tap-to-file
  (run-tests :all)
  "tests.tap")
