@@ -8,5 +8,3 @@
   (cond ((>= x 0) t)
         (t nil)))
 
-(defun is-negative (x)
-  (not (is-positive x)))
