@@ -1,8 +1,11 @@
 pipeline {
-    def major = 1
-    def minor = 1
 
-    agent { label 'sbcl-agent' } 
+    agent { label 'sbcl-agent' }
+
+    parameters {
+        string(name: 'MAJOR', defaultValue: '1', description: 'Major version number')
+        string(name: 'MINOR', defaultValue: '1', description: 'Minor version number')
+    }
 
     stages {
 
@@ -34,10 +37,10 @@ pipeline {
             deleteDir()
         }
         success {
-            slackSend color: "#00FF00", message: "Build Complete: ${env.JOB_NAME} ${major}.${minor}.${env.BUILD_NUMBER}"
+            slackSend color: "#00FF00", message: "Build Complete: ${env.JOB_NAME} ${params.MAJOR}.${params.MINOR}.${env.BUILD_NUMBER}"
         }
         failure {
-            slackSend color: "#FF0000", message: "Build Failed: ${env.JOB_NAME} ${major}.${minor}.${env.BUILD_NUMBER}"
+            slackSend color: "#FF0000", message: "Build Failed: ${env.JOB_NAME} ${params.MAJOR}.${params.MINOR}.${env.BUILD_NUMBER}"
         }
     }
 
